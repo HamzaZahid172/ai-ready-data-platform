@@ -1,0 +1,17 @@
+[
+  {
+    "user_id": "u1",
+    "order_value": 120,
+    "timestamp": "2026-01-01T10:00:00Z"
+  },
+  {
+    "user_id": "u1",
+    "order_value": 80,
+    "timestamp": "2026-01-02T11:00:00Z"
+  },
+  {
+    "user_id": "u2",
+    "order_value": 40,
+    "timestamp": "2026-01-02T12:00:00Z"
+  }
+]
