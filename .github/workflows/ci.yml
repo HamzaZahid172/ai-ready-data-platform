@@ -1,14 +1,33 @@
-name: CI
+name: Data Pipeline & ML Training
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  test:
+  pipeline:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - run: pip install scikit-learn
-      - run: python ml/train_model.py
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run data pipeline
+        run: |
+          python ingestion/ingest.py
+          python transformations/validate_data.py
+          python transformations/build_features.py
+
+      - name: Train ML model
+        run: |
+          python ml/train_model.py
