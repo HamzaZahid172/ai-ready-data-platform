@@ -11,18 +11,39 @@
 <p id="result"></p>
 
 <script>
-async function predict() {
-  const res = await fetch("http://localhost:3000/predict", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      total_orders: Number(orders.value),
-      avg_order_value: Number(value.value)
-    })
-  });
-  const data = await res.json();
-  result.innerText = data.prediction;
-}
+  const API_URL = "https://ai-ready-data-platform.onrender.com/predict";
+
+  async function predict() {
+    const orders = document.getElementById("orders").value;
+    const value = document.getElementById("value").value;
+    const resultEl = document.getElementById("result");
+
+    resultEl.innerText = "Loading...";
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          total_orders: Number(orders),
+          avg_order_value: Number(value)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("API error");
+      }
+
+      const data = await response.json();
+      resultEl.innerText = "Prediction: " + data.prediction;
+    } catch (err) {
+      resultEl.innerText = "Error calling API. Try again.";
+      console.error(err);
+    }
+  }
 </script>
+
 </body>
 </html>
