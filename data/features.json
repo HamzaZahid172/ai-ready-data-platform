@@ -1,0 +1,12 @@
+[
+  {
+    "user_id": "u1",
+    "total_orders": 2,
+    "avg_order_value": 100.0
+  },
+  {
+    "user_id": "u2",
+    "total_orders": 1,
+    "avg_order_value": 40.0
+  }
+]
