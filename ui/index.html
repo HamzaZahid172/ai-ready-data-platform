@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>AI Demo</title></head>
+<body>
+<h2>Prediction Demo</h2>
+
+<input id="orders" placeholder="Total Orders">
+<input id="value" placeholder="Avg Order Value">
+<button onclick="predict()">Predict</button>
+
+<p id="result"></p>
+
+<script>
+async function predict() {
+  const res = await fetch("http://localhost:3000/predict", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      total_orders: Number(orders.value),
+      avg_order_value: Number(value.value)
+    })
+  });
+  const data = await res.json();
+  result.innerText = data.prediction;
+}
+</script>
+</body>
+</html>
