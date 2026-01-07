@@ -3,18 +3,20 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());            
+app.use(cors());
 app.use(express.json());
 
 app.post("/predict", (req, res) => {
   const { total_orders, avg_order_value } = req.body;
 
-  if (total_orders === undefined || avg_order_value === undefined) {
+  if (
+    typeof total_orders !== "number" ||
+    typeof avg_order_value !== "number"
+  ) {
     return res.status(400).json({ error: "Invalid input" });
   }
 
   const prediction = avg_order_value > 60 ? "high_value" : "low_value";
-
   res.json({ prediction });
 });
 
