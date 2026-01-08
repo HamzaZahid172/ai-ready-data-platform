@@ -14,8 +14,8 @@
   const API_URL = "https://ai-ready-data-platform.onrender.com/predict";
 
   async function predict() {
-    const orders = document.getElementById("orders").value;
-    const value = document.getElementById("value").value;
+    const orders = Number(document.getElementById("orders").value);
+    const value = Number(document.getElementById("value").value);
     const resultEl = document.getElementById("result");
 
     resultEl.innerText = "Loading...";
@@ -27,20 +27,20 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          total_orders: Number(orders),
-          avg_order_value: Number(value)
+          total_orders: orders,
+          avg_order_value: value
         })
       });
 
       if (!response.ok) {
-        throw new Error("API error");
+        throw new Error("HTTP " + response.status);
       }
 
       const data = await response.json();
       resultEl.innerText = "Prediction: " + data.prediction;
-    } catch (err) {
+    } catch (error) {
+      console.error(error);
       resultEl.innerText = "Error calling API. Try again.";
-      console.error(err);
     }
   }
 </script>
